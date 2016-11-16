@@ -1,0 +1,29 @@
+$charcoal : #525251;
+$grey : #ccc;
+
+form {
+    .btn {
+        @media (min-width: 992px) {
+            margin-top: 26px;
+        }
+    }
+}
+
+table th, table td {
+    padding: 8px;
+}
+
+img.img-thumbnail {
+    border: 2px solid $grey;
+    margin-right: 18px;
+}
+
+.post {
+    padding: 8px;
+    border-bottom: 1px solid #bbb;
+}
+
+.badge {
+    background-color: $grey;
+    color: $charcoal;
+}
