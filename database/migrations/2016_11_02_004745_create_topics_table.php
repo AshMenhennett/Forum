@@ -18,8 +18,6 @@ class CreateTopicsTable extends Migration
             $table->integer('user_id')->unsigned();
             $table->string('slug')->unique();
             $table->string('title');
-            $table->text('body');
-            $table->boolean('closed')->default(0);
             $table->softDeletes();
             $table->timestamps();
 

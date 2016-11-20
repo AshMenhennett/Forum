@@ -16,6 +16,7 @@ class CreateInviteTable extends Migration
         Schema::create('invites', function (Blueprint $table) {
             $table->increments('id');
             $table->string('email');
+            $table->enum('role', ['user', 'moderator', 'admin']);
             $table->text('code');
             $table->timestamps();
         });

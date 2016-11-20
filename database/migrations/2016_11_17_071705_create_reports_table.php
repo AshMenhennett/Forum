@@ -15,10 +15,13 @@ class CreateReportsTable extends Migration
     {
         Schema::create('reports', function (Blueprint $table) {
             $table->increments('id');
+            // user_id refers to the user who reported the content
+            $table->integer('user_id')->unsigned();
             $table->integer('content_id');
             $table->string('type');
-            $table->boolean('resolved')->default(0);
             $table->timestamps();
+
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
 
