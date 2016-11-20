@@ -8,7 +8,7 @@
                 <div class="panel-heading">Create a Topic</div>
 
                 <div class="panel-body">
-                    <form action="{{ route('forum.topics.create.submit') }}" method="post">
+                    <form action="{{ route('forum.topics.topic.create.submit') }}" method="post">
                         <div class="form-group{{ $errors->has('title') ? ' has-error' : '' }}">
                             <label for="title" class="control-label">Topic Title</label>
                             <input type="text" name="title" id="title" class="form-control" placeholder="Halt! Crocs?">
@@ -32,7 +32,7 @@
                         </div>
                         <div class="form-group checkbox pull-right">
                             <label for="subscribe">
-                                <input type="checkbox" name="subscribe" id="subscribe" class="form-control" style="margin-top:-6px; padding: 8px" checked> &nbsp; Subscribe to topic?
+                                <input type="checkbox" name="subscribe" id="subscribe" style="margin-top:4px; padding: 8px" checked> &nbsp; Subscribe to topic?
                             </label>
                         </div>
                         <br />

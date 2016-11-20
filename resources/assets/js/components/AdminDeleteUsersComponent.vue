@@ -4,8 +4,8 @@
             <div class="panel panel-default">
                 <div class="panel-heading">Delete users</div>
                 <div class="panel-body">
-                    <button @click.prevent="order(users)" class="btn btn-default"><span v-bind:class="'glyphicon glyphicon-sort-by-attributes' + (orderBy === 'desc' ? '-alt' : '')"></span> {{ (orderBy === 'asc' ? 'Older' : 'Newer') }}</button>
-                    <table class="striped">
+                    <button @click.prevent="order(users)" class="btn btn-default"><span v-bind:class="'glyphicon glyphicon-sort-by-attributes' + (orderBy === 'desc' ? '' : '-alt')"></span> {{ (orderBy === 'asc' ? 'Newest' : 'Oldest') }}</button>
+                    <table class="table">
                         <thead>
                             <tr>
                                 <th>ID</th> <th>User</th> <th>Email</th> <th>Role</th> <th></th>
@@ -40,11 +40,10 @@
                 });
             },
             destroy(name) {
-                return this.$http.delete('/admin/dashboard/users/' + name).then((response) => {
-                    this.getUsers();
-                }, () => {
-                    console.log('error');
-                });
+                for (var i = 0; i < this.users.length; i++) {
+                    (this.users[i].name === name) ? this.users.splice(i, 1) : false;
+                }
+                return this.$http.delete('/admin/dashboard/users/' + name);
             },
             order(users) {
                 this.users = reverse(users);

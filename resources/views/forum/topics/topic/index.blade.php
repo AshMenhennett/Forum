@@ -5,21 +5,47 @@
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
             <p><a href="{{ route('home.index') }}">&laquo; Back to your topics</a></p>
+            <report-topic-button topic-slug="{{ $topic->slug }}" class="pull-right report-text report-topic"></report-topic-button>
             <div class="panel panel-default">
                 <div class="panel-heading" style="text-align: center">
                     <h4>{{ $topic->title }}</h4>
                     {{ Carbon\Carbon::createFromTimeStamp(strtotime($topic->created_at))->diffForHumans() }} by <a href="/user/profile/{{ '@' . App\User::findOrFail($topic->user_id)->name }}">{{ '@' . App\User::findOrFail($topic->user_id)->name }}</a>
                     <br />
-                    <subscribe-button topic-slug="{{ $topic->slug }}"></subscribe-button>
+                    @can ('delete', $topic)
+                        <form action="{{ route('forum.topics.topic.delete', $topic) }}" method="post">
+                            {{ method_field('DELETE') }}
+                            {{ csrf_field() }}
+                            <button type="submit" class="btn btn-link danger-link"><span class="glyphicon glyphicon-remove"></span> Delete</button>
+                        </form>
+                    @endcan
+                    @if (Auth::check())
+                        <subscribe-button topic-slug="{{ $topic->slug }}"></subscribe-button>
+                    @endif
+                    <br />
+                    <span class="text-muted pull-right badge">{{ count($posts) }}</span>
+                    <br />
                 </div>
 
                 <div class="panel-body">
                     @if (count($posts))
                         @foreach ($posts as $post)
+                            <report-post-button topic-slug="{{ $topic->slug }}" post-id="{{ $post->id }}" class="pull-right report-text"></report-post-button>
                             <div class="post" id="post-{{ $post->id }}">
                                 <img src="{{ Config::get('s3.buckets.images') . '/avatars/' . (App\User::findOrFail($post->user_id)->hasCustomAvatar() ?  App\User::findOrFail($post->user_id)->avatar : 'avatar-blank.png') }}" width="60" height="60" class="img-thumbnail pull-left" alt="{{ $topic->title }} image"/> <span class="pull-left">{{ Carbon\Carbon::createFromTimeStamp(strtotime($post->created_at))->diffForHumans() }} by <a href="/user/profile/{{ '@' . $user = App\User::findOrFail($post->user_id)->name }}"></a> <a href="/user/profile/{{ '@' . $user = App\User::findOrFail($post->user_id)->name }}">{{ '@' . $user = App\User::findOrFail($post->user_id)->name }}</a></span>
-                                <br /><br />
-                                <p>{{ $post->body }}</p>
+                                <br /><br /><br />
+                                <p>{!! GrahamCampbell\Markdown\Facades\Markdown::convertToHtml(
+                                    App\AutolinkUsername::parse($post->body)
+                                ) !!}</p>
+                                @can ('edit', $post)
+                                    <a href="{{ route('forum.topics.topic.posts.post.edit', [$topic, $post]) }}"><span class="glyphicon glyphicon-pencil"></span> Edit</a>
+                                @endcan
+                                @can ('delete', $post)
+                                    <form class="inline" action="{{ route('forum.topics.topic.posts.post.delete', [$topic, $post]) }}" method="post">
+                                        {{ method_field('DELETE') }}
+                                        {{ csrf_field() }}
+                                        <button type="submit" class="btn btn-link danger-link"><span class="glyphicon glyphicon-remove"></span> Delete</button>
+                                    </form>
+                                @endcan
                             </div>
                         @endforeach
                     @else

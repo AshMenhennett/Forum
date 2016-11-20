@@ -17,7 +17,22 @@ class EventServiceProvider extends ServiceProvider
             'App\Listeners\SendTopicSubscribersPostEmail',
         ],
         'App\Events\UserSubscribedToTopic' => [
-            'App\Listeners\SendTopicOwnerEmail',
+            'App\Listeners\SendTopicOwnerSubscriptionCreatedEmail',
+        ],
+        'App\Events\TopicReported' => [
+            'App\Listeners\SendModeratorsTopicReportedEmail',
+        ],
+        'App\Events\PostReported' => [
+            'App\Listeners\SendModeratorsPostReportedEmail',
+        ],
+        'App\Events\TopicDeleted' => [
+            'App\Listeners\SendTopicOwnerTopicDeletedEmail',
+        ],
+        'App\Events\PostDeleted' => [
+            'App\Listeners\SendPostOwnerPostDeletedEmail',
+        ],
+        'App\Events\UserRoleModified' => [
+            'App\Listeners\SendUserRoleModifiedEmail',
         ],
     ];
 

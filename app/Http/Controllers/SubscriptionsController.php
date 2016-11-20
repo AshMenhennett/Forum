@@ -28,6 +28,7 @@ class SubscriptionsController extends Controller
     {
         $user = $request->user();
         $subscription = $user->isSubscribedTo($topic);
+
         if ($subscription !== null) {
             // subscription exists, but can be either subscribed or unsubscribed
             if ($subscription->subscribed === 0) {

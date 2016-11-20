@@ -13,7 +13,7 @@
             <div class="panel panel-default">
                 <div class="panel-heading">Your topics</div>
                 <div class="panel-body" style="text-align: center">
-                    <a href="{{ route('forum.topics.create.form') }}" class="btn btn-primary btn-block">Create a topic</a>
+                    <a href="{{ route('forum.topics.topic.create.form') }}" class="btn btn-primary btn-block">Create a topic</a>
                     <br />
                     <ul class="list-group">
                         @if (count($topics))
@@ -24,6 +24,13 @@
                                     <strong>Created</strong> {{ Carbon\Carbon::createFromTimeStamp(strtotime($topic->created_at))->diffForHumans() }}
                                     <br />
                                     <strong>Last post</strong> {{ Carbon\Carbon::createFromTimeStamp(strtotime($topic->updated_at))->diffForHumans() }}
+                                    @can ('delete', $topic)
+                                        <form action="{{ route('forum.topics.topic.delete', $topic) }}" method="post">
+                                            {{ method_field('DELETE') }}
+                                            {{ csrf_field() }}
+                                            <button type="submit" class="btn btn-link danger-link"><span class="glyphicon glyphicon-remove"></span> Delete</button>
+                                        </form>
+                                    @endcan
                                 </li>
                             @endforeach
                         @else

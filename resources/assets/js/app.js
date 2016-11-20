@@ -1,4 +1,3 @@
-
 /**
  * First we will load all of this project's JavaScript dependencies which
  * include Vue and Vue Resource. This gives a great starting point for
@@ -17,6 +16,9 @@ var VueResource = require('vue-resource');
 
 Vue.component('delete-users', require('./components/AdminDeleteUsersComponent.vue'));
 Vue.component('subscribe-button', require('./components/SubscribeButtonComponent.vue'));
+Vue.component('report-topic-button', require('./components/ReportTopicComponent.vue'));
+Vue.component('report-post-button', require('./components/ReportPostComponent.vue'));
+Vue.component('delete-report', require('./components/ModeratorDeleteReportButtonComponent.vue'));
 
 Vue.use(VueResource);
 

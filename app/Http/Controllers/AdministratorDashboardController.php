@@ -9,10 +9,11 @@ use App\User;
 use App\Invite;
 use App\Mail\Invited;
 use Illuminate\Http\Request;
+use App\Events\UserRoleModified;
 use App\Http\Requests\InviteDashboardFormRequest;
 use App\Http\Requests\UpdateDashboardFormRequest;
 
-class DashboardController extends Controller
+class AdministratorDashboardController extends Controller
 {
 
     // no authorization here, all taken care of by auth.admin middleware
@@ -30,7 +31,6 @@ class DashboardController extends Controller
 
     public function index(Request $request)
     {
-
         $users = $this->getUsers($request);
 
         return view('admin.dashboard.index', [
@@ -45,7 +45,8 @@ class DashboardController extends Controller
         // $request->user is the submitted user id
 
         if (!count(User::where('id', $request->user)->get())) {
-            // user submitted does not belong in db
+            // user isn't in db
+            // form was corrupted, false data submitted
             return false;
         }
 
@@ -55,13 +56,17 @@ class DashboardController extends Controller
         }
 
         if (!in_array($request->role, Config::get('enums.roles'))) {
+            // role selected is not valid
             // form was corrupted, false data submitted
             return false;
         }
 
         $user = User::findOrFail($request->user);
+        $old_role = $user->role;
         $user->role = $request->role;
         $user->save();
+
+        event(new UserRoleModified($old_role, $user));
 
         return redirect()->route('admin.dashboard.index');
     }

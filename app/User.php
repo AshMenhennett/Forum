@@ -43,6 +43,11 @@ class User extends Authenticatable
         return $this->hasManyThrough(Post::class, Topic::class);
     }
 
+    public function reports()
+    {
+        return $this->hasMany(Report::class);
+    }
+
     public function hasCustomAvatar()
     {
         if ($this->avatar !== null) {
@@ -84,7 +89,6 @@ class User extends Authenticatable
 
     public function isSubscribedTo(Topic $topic)
     {
-
         // loop through all subscriptions for current user
         foreach ($this->getUserSubscriptions() as $subscription) {
             if ($subscription->topic_id === $topic->id) {

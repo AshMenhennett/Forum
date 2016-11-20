@@ -55,5 +55,6 @@ class Kernel extends HttpKernel
 
         'log.activity' => Middleware\LogLastActivity::class,
         'auth.admin' => Middleware\Admin::class,
+        'auth.elevated' => Middleware\Elevated::class,
     ];
 }

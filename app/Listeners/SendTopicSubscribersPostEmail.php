@@ -40,6 +40,5 @@ class SendTopicSubscribersPostEmail implements ShouldQueue
                 }
             }
         }
-
     }
 }

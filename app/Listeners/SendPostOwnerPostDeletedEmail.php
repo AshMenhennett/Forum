@@ -3,19 +3,19 @@
 namespace App\Listeners;
 
 use Mail;
-use Log;
-use App\Mail\UserSubscribedToTopic as UserSubscribedToTopicEmail;
-use App\Events\UserSubscribedToTopic;
+use App\Events\PostDeleted;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
+use App\Mail\PostDeleted as PostDeletedEmail;
 
-class SendTopicOwnerEmail
+class SendPostOwnerPostDeletedEmail implements ShouldQueue
 {
     /**
      * Create the event listener.
      *
      * @return void
      */
+
     public function __construct()
     {
         //
@@ -24,11 +24,11 @@ class SendTopicOwnerEmail
     /**
      * Handle the event.
      *
-     * @param  UserSubscribedToTopic  $event
+     * @param  PostDeleted  $event
      * @return void
      */
-    public function handle(UserSubscribedToTopic $event)
+    public function handle(PostDeleted $event)
     {
-        Mail::to($event->topic->user()->get())->queue(new UserSubscribedToTopicEmail($event->topic));
+        Mail::to($post->user->email)->queue(new PostDeletedEmail($post));
     }
 }

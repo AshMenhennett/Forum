@@ -12,7 +12,6 @@ class SettingsController extends Controller
 {
     public function index(Request $request)
     {
-
         $user = $request->user();
 
         return view('user.settings.index', [
@@ -23,15 +22,16 @@ class SettingsController extends Controller
 
     public function update(SettingsFormRequest $request)
     {
-
         // don't need to authorize this action, as only making changes to logged in user.
-
         if ($request->hasFile('avatar')) {
             // wants to update avatar
             $fileId = uniqid(true);
             $request->file('avatar')->move(storage_path() . '/avatars', $fileId);
 
-            $this->dispatch(new UploadAvatar($request->user(), $fileId));
+            dispatch(new UploadAvatar($request->user(), $fileId));
+
+            // not exactly uploaded to s3 yet.. but its ok for now
+            Session::flash('avatar_image_uploaded', true);
         }
 
         $password_update_success = false;
@@ -46,12 +46,10 @@ class SettingsController extends Controller
 
             // validation is taking care of critera and checking against current password, to make sure user is a valid user
             $password_update_success = true;
-
         }
 
         Session::flash('password_update_success', $password_update_success);
 
         return redirect()->route('user.settings.index');
-
     }
 }

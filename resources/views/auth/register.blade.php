@@ -35,11 +35,6 @@
                                         <strong>{{ $errors->first('email') }}</strong>
                                     </span>
                                 @endif
-                                @if (Request::get('code'))
-                                    <div class="help-block">
-                                        Remember to register using the same email address that the code was sent to.
-                                    </div>
-                                @endif
                             </div>
                         </div>
 

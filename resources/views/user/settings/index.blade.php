@@ -8,7 +8,12 @@
                 <div class="panel-heading">Settings</div>
 
                 <div class="panel-body">
-
+                    @if (Session::get('avatar_image_uploaded') != null)
+                        <div class="alert alert-success alert-dismissible" role="alert">
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                            <strong>Awesome!</strong> Your avatar will be visible in the next few seconds, depending on how large the file is. Give the page a refresh.
+                        </div>
+                    @endif
                     <form action="{{ route('user.settings.update') }}" method="post" enctype="multipart/form-data">
                         <h4>Change avatar</h4>
                         <img src="{{ Config::get('s3.buckets.images') . '/avatars/' . ($user->hasCustomAvatar() ?  $user->avatar : 'avatar-blank.png') }}" class="img-thumbnail" width="100" height="100" alt="{{ $user->name }}-avatar">
@@ -46,7 +51,6 @@
                                 Only fill in the password fields if you wish to change your password.
                             </div>
                         </div>
-
 
                         {{ csrf_field() }}
                         <button type="submit" class="btn btn-default pull-right">Update</button>

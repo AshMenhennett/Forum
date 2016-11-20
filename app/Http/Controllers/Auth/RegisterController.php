@@ -76,8 +76,7 @@ class RegisterController extends Controller
             $register_using_code = false;
 
             // let's make sure the code was linked to a valid instance of Invite.
-            // let's also check that the email address used to register was linked to the Invite
-            if ($invite != null && $invite->email === $data['email']) {
+            if ($invite != null) {
                 // set the role as per the invite
                 $role = $invite->role;
 

@@ -5767,8 +5767,14 @@ button.close {
     display: none !important; } }
 
 @media (min-width: 992px) {
-  form .btn {
+  form.custom-horizontal .btn {
     margin-top: 26px; } }
+
+.inline {
+  display: inline-block; }
+
+.danger-link {
+  color: #d9534f; }
 
 table th, table td {
   padding: 8px; }
@@ -5782,7 +5788,16 @@ img.img-thumbnail {
   border-bottom: 1px solid #bbb; }
 
 .badge {
-  background-color: #ccc;
-  color: #525251; }
+  background-color: #525251;
+  color: #fff; }
+
+.report-text {
+  color: #e7908e; }
+  .report-text a {
+    color: #ccc !important;
+    text-decoration: underline; }
+
+.report-topic {
+  padding-right: 6px; }
 
 /*# sourceMappingURL=app.css.map */

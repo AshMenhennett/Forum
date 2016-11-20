@@ -42,4 +42,5 @@ class Topic extends Model
     {
         return count($this->posts()->get());
     }
+
 }

@@ -44,9 +44,8 @@ class UploadAvatar implements ShouldQueue
             $constraint->upsize();
         });
 
-        if (Storage::disk('s3')->put('avatars/'. $fileName, fopen($path, 'r+'))) {
-            File::delete($path);
-        }
+        Storage::disk('s3')->put('avatars/'. $fileName, fopen($path, 'r+'));
+        //File::delete($path); -- not working
 
         $this->user->avatar = $fileName;
         $this->user->save();

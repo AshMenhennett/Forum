@@ -58,8 +58,8 @@ return [
             'driver' => 's3',
             'key' => env('S3_KEY'),
             'secret' => env('S3_SECRET'),
-            'region' => 'ap-southeast-2',
-            'bucket' => 'images.forum.app',
+            'region' => env('S3_REGION'),
+            'bucket' => env('S3_BUCKET_NAME'),
         ],
 
     ],

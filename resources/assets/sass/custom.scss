@@ -1,12 +1,22 @@
 $charcoal : #525251;
+$danger: #d9534f;
+$white : #fff;
 $grey : #ccc;
 
-form {
+form.custom-horizontal {
     .btn {
         @media (min-width: 992px) {
             margin-top: 26px;
         }
     }
+}
+
+.inline {
+    display: inline-block;
+}
+
+.danger-link {
+    color: $danger;
 }
 
 table th, table td {
@@ -24,6 +34,17 @@ img.img-thumbnail {
 }
 
 .badge {
-    background-color: $grey;
-    color: $charcoal;
+    background-color: $charcoal;
+    color: $white;
+}
+
+.report-text{
+    a {
+        color: $grey !important;
+        text-decoration: underline;
+    }
+    color: lighten($danger, 15%);
+}
+.report-topic {
+    padding-right: 6px;
 }

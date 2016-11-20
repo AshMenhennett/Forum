@@ -19,6 +19,11 @@
             'csrfToken' => csrf_token(),
         ]); ?>
     </script>
+    <script>
+        window.Forum = <?php echo json_encode([
+            'auth' => Auth::check(),
+        ]); ?>
+    </script>
 </head>
 <body>
     <div id="app">
@@ -59,10 +64,13 @@
                                 </a>
 
                                 <ul class="dropdown-menu" role="menu">
-                                    <li><a href="{{ route('home.index') }}">Your Topics</a></li>
-                                    @if (Auth::check() && Auth::user()->role === 'admin')
-                                            <li><a href="{{ route('admin.dashboard.index') }}">Dashboard</a></li>
+                                    @if (Auth::user()->role === 'admin')
+                                        <li><a href="{{ route('admin.dashboard.index') }}">Admin Dashboard</a></li>
                                     @endif
+                                    @if (Auth::user()->isElevated())
+                                        <li><a href="{{ route('moderator.dashboard.index') }}">Moderator Dashboard</a></li>
+                                    @endif
+                                    <li><a href="{{ route('home.index') }}">Your Topics</a></li>
                                     <li><a href="{{ route('user.profile.index', [Auth::user()->name]) }}">Profile</a></li>
                                     <li><a href="{{ route('user.settings.index') }}">Settings</a></li>
                                     <li>

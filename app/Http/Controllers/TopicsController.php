@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Post;
 use App\Topic;
 use App\Subscription;
+use App\Events\TopicDeleted;
 use Illuminate\Http\Request;
 use App\Http\Requests\CreateTopicFormRequest;
 
@@ -31,7 +32,7 @@ class TopicsController extends Controller
 
     public function showCreateForm()
     {
-        return view('forum.topics.create.form');
+        return view('forum.topics.topic.create.form');
     }
 
     public function create(CreateTopicFormRequest $request)
@@ -39,6 +40,8 @@ class TopicsController extends Controller
         //$request->title ==== topic title
         $topic = new topic();
         $topic->user_id = $request->user()->id;
+        // could use str_slug helper
+        // i.e $topic->slug = str_slug(mb_strimwidth($request->title, 0, 250), '-');
         $topic->slug = str_replace([
             ' ', '.', '/', '\\', ',', '\'', '"', '?', '#', '=', ':'
         ], '-', mb_strimwidth($request->title, 0, 250));
@@ -60,5 +63,18 @@ class TopicsController extends Controller
         return redirect()->route('forum.topics.topic.show', [
             'topic' => $topic,
         ]);
+    }
+
+    public function destroy(Request $request, Topic $topic)
+    {
+        // don't need to use policy here, as auth.elevated middleware is being use for the route associated with this controller method invocation
+        $topic->delete();
+
+        if ($topic->user->id !== $request->user()->id) {
+            // don't want to send email to the owner of the topic, if they deleted it
+            event(new TopicDeleted($topic));
+        }
+
+        return redirect()->route('forum.topics.index');
     }
 }

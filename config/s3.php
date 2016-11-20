@@ -2,6 +2,6 @@
 
     return [
         'buckets' => [
-            'images' => 'https://s3-ap-southeast-2.amazonaws.com/images.forum.app',
+            'images' => env('S3_IMG_BUCKET_URL'),
         ],
     ];
