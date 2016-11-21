@@ -87,7 +87,7 @@
      </div>
 
     @if (count($users))
-        <delete-users></delete-users>
+        <delete-users users-prop="{{ $users }}"></delete-users>
     @endif
 
 </div>

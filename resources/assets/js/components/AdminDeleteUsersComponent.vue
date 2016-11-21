@@ -33,12 +33,10 @@
                 orderBy: 'asc'
             }
         },
+        props: {
+            usersProp: null
+        },
         methods: {
-            getUsers() {
-                return this.$http.get('/admin/dashboard/users/index').then((response) => {
-                    this.users = response.body;
-                });
-            },
             destroy(name) {
                 for (var i = 0; i < this.users.length; i++) {
                     (this.users[i].name === name) ? this.users.splice(i, 1) : false;
@@ -51,7 +49,7 @@
             }
         },
         mounted() {
-            this.getUsers();
+            this.users = JSON.parse(this.usersProp);
         }
     }
 </script>

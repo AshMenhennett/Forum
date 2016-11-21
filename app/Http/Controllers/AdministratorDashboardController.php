@@ -18,11 +18,6 @@ class AdministratorDashboardController extends Controller
 
     // no authorization here, all taken care of by auth.admin middleware
 
-    /**
-     * Gets all user objects except the current user
-     * @param  Request $request
-     * @return Collection
-     */
     protected function getUsers(Request $request)
     {
         // get all users, except current user
@@ -101,13 +96,6 @@ class AdministratorDashboardController extends Controller
 
         return redirect()->route('admin.dashboard.index');
 
-    }
-
-    public function fetchUsers(Request $request)
-    {
-        $users = $this->getUsers($request);
-
-        return response()->json($users, 200);
     }
 
     public function destroy(Request $request, User $user)

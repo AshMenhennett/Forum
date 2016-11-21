@@ -17,11 +17,8 @@
         },
         methods: {
             destroy(id) {
-                return this.$http.delete('/moderator/dashboard/reports/' + id).then((response) => {
-                    this.deleted = true;
-                }, () => {
-                    console.log('error destroy');
-                });
+                this.deleted = true;
+                return this.$http.delete('/moderator/dashboard/reports/' + id);
             }
         }
     }
