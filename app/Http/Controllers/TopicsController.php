@@ -40,11 +40,9 @@ class TopicsController extends Controller
         //$request->title ==== topic title
         $topic = new topic();
         $topic->user_id = $request->user()->id;
-        // could use str_slug helper
-        // i.e $topic->slug = str_slug(mb_strimwidth($request->title, 0, 250), '-');
-        $topic->slug = str_replace([
-            ' ', '.', '/', '\\', ',', '\'', '"', '?', '#', '=', ':'
-        ], '-', mb_strimwidth($request->title, 0, 250));
+        // str_slug will basically strip all special chars and replace with hyphens.
+        // be careful, as slug is to be unique, but hello&1 is evaluated as hello1, but hello.1 is also evaluated as hello1
+        $topic->slug = str_slug(mb_strimwidth($request->title, 0, 255), '-');
         $topic->title = $request->title;
         $topic->save();
 

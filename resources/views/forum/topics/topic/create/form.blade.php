@@ -17,6 +17,9 @@
                                     {{ $errors->first('title') }}
                                 </div>
                             @endif
+                            <div class="help-block">
+                                <p>All titles need to be unique.</p>
+                            </div>
                         </div>
                         <div class="form-group{{ $errors->has('post') ? ' has-error' : '' }}">
                             <label for="post" class="control-label">Your Post</label>
