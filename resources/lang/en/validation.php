@@ -86,6 +86,7 @@ return [
 
     'no_spaces'            => 'The :attribute cannot have whitespace.',
     'hash'                 => 'The old password field does not match the current password',
+    'unique_slug_title'    => 'Your topic is very similar to an existing one. Try changing the title up a little.',
 
     /*
     |--------------------------------------------------------------------------

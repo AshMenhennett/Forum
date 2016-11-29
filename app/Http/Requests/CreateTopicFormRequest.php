@@ -24,7 +24,7 @@ class CreateTopicFormRequest extends FormRequest
     public function rules()
     {
         return [
-            'title' => 'required|max:255|unique:topics',
+            'title' => 'required|max:255|unique:topics|unique_slug_title',
             'post' => 'required',
         ];
     }
