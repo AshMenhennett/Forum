@@ -31,8 +31,8 @@ Route::group(['middleware' => ['log.activity']], function() {
         Route::group(['prefix' => 'forum'], function() {
             // auth forum routes
             // topics
-            Route::get('/topics/topic/create', 'TopicsController@showCreateForm')->name('forum.topics.topic.create.form');
-            Route::post('/topics/topic/create', 'TopicsController@create')->name('forum.topics.topic.create.submit');
+            Route::get('/topics/create', 'TopicsController@showCreateForm')->name('forum.topics.create.form');
+            Route::post('/topics/create', 'TopicsController@create')->name('forum.topics.create.submit');
 
             // subscriptions
             Route::get('/topics/{topic}/subscription/status', 'SubscriptionsController@getSubscriptionStatus')->name('forum.topics.topic.subscription.status');

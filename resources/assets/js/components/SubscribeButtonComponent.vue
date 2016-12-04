@@ -17,8 +17,6 @@
             update() {
                 return this.$http.post('/forum/topics/' + this.topicSlug + '/subscription').then((response) => {
                     this.getStatus();
-                }, () => {
-                    console.log('error update');
                 });
             },
             getStatus() {
@@ -35,8 +33,6 @@
                         // no row in database matching criteria
                         this.verb = 'Subscribe';
                     }
-                }, () => {
-                    console.log('error getStatus');
                 });
             }
         },

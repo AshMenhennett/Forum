@@ -8,7 +8,7 @@
                 <div class="panel-heading">Create a Topic</div>
 
                 <div class="panel-body">
-                    <form action="{{ route('forum.topics.topic.create.submit') }}" method="post">
+                    <form action="{{ route('forum.topics.create.submit') }}" method="post">
                         <div class="form-group{{ $errors->has('title') ? ' has-error' : '' }}">
                             <label for="title" class="control-label">Topic Title</label>
                             <input type="text" name="title" id="title" class="form-control" placeholder="Halt! Crocs?">

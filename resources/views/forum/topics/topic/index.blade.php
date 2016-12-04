@@ -33,9 +33,11 @@
                             <div class="post" id="post-{{ $post->id }}">
                                 <img src="{{ Config::get('s3.buckets.images') . '/avatars/' . (App\User::findOrFail($post->user_id)->hasCustomAvatar() ?  App\User::findOrFail($post->user_id)->avatar : 'avatar-blank.png') }}" width="60" height="60" class="img-thumbnail pull-left" alt="{{ $topic->title }} image"/> <span class="pull-left">{{ Carbon\Carbon::createFromTimeStamp(strtotime($post->created_at))->diffForHumans() }} by <a href="/user/profile/{{ '@' . $user = App\User::findOrFail($post->user_id)->name }}"></a> <a href="/user/profile/{{ '@' . $user = App\User::findOrFail($post->user_id)->name }}">{{ '@' . $user = App\User::findOrFail($post->user_id)->name }}</a></span>
                                 <br /><br /><br />
-                                <p>{!! GrahamCampbell\Markdown\Facades\Markdown::convertToHtml(
-                                    App\AutolinkUsername::parse($post->body)
-                                ) !!}</p>
+                                <p>
+                                    {!! GrahamCampbell\Markdown\Facades\Markdown::convertToHtml(
+                                        App\AutolinkUsername::parse($post->body)
+                                    ) !!}
+                                </p>
                                 @can ('edit', $post)
                                     <a href="{{ route('forum.topics.topic.posts.post.edit', [$topic, $post]) }}"><span class="glyphicon glyphicon-pencil"></span> Edit</a>
                                 @endcan

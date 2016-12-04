@@ -8,7 +8,7 @@
                 <div class="panel-heading">Forum</div>
 
                 <div class="panel-body" style="text-align: center">
-                    <a href="{{ route('forum.topics.topic.create.form') }}" class="btn btn-primary btn-block">Create a topic</a>
+                    <a href="{{ route('forum.topics.create.form') }}" class="btn btn-primary btn-block">Create a topic</a>
                     <br />
                     <ul class="list-group">
                         @if (count($topics))

@@ -22,15 +22,11 @@
                 return this.$http.get('/forum/topics/' + this.topicSlug + '/posts/' + this.postId + '/report/status').then((response) => {
                     // type will only exist in returned JSON if a valid report for the given topic exists in the database
                     this.reported = ('type' in response.body) ? true : false;
-                }, () => {
-                    console.log('getStatus error');
                 });
             },
             report() {
                 return this.$http.post('/forum/topics/' + this.topicSlug + '/posts/' + this.postId + '/report').then((response) => {
                     this.getStatus();
-                }, () => {
-                    console.log('report error');
                 });
             }
         },
