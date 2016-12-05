@@ -11,9 +11,6 @@ This is a repository for a forum app, built with Laravel 5.3 and Vue 2.
 - Markdown support for creating posts. *All posts are stored in database as Markdown and converted to HTML, when needed*
 - @mention functionality, alerting ```User```s by email when they are mentioned in a post. Including auto link generation, when a ```User``` uses the @mention functionality. I.e ```@ashmenhennett``` will be converted to a ```[@ashmenhennett](http://example.com/user/profile/@ashmenhennett)```.
 
-EventServiceProvider
-
-$listen
 
 ##Commands
 There are a coupld of commands for use with this application:
@@ -30,8 +27,7 @@ There are a coupld of commands for use with this application:
 - Users can manage their own profile including making changes to their password and avatar image.
 - All subscribed ```User```s recieve emails, via a triggered event when a ```Topic``` that they are subscribed to has a ```Post``` added to it.
 - Moderators are alerted via email when content in reported and they can easily manage these reports in the Moderator Dashboard.
-- Other expected events are raised, check out ```App\Events``` and ```App\Listeners``` for further insight.
-- A Facade is used to 'swap' out ```@username``` mentions for a link to the mentioned user's profile in Markdown, later converted to HTML via the [Laravel Markdown](https://github.com/GrahamCampbell/Laravel-Markdown) package.
+- Other expected events are raised, check out ```App\Events``` and ```App\Listeners``` for further insight. See ```App\Providers\EventServiceProvider```s ```$listen``` property for the association of ```Event```s and ```Listener```s.
 
 ##Installation & Configuration
 If you would like to install this project, treat it as you would any other Laravel application, keeping in mind some additional crucial environment variables:
@@ -75,9 +71,9 @@ Editing a profile
 ![Edit Profile](https://cloud.githubusercontent.com/assets/9494635/20865191/631bde9a-ba5b-11e6-9a68-b4d337ae4c0a.PNG)
 
 ##Packages
-[AWS SDK PHP](https://github.com/aws/aws-sdk-php)
-[Carbon](https://github.com/briannesbitt/carbon)
-[DBAL](https://github.com/doctrine/dbal)
-[Flysystem AWS S3](https://github.com/thephpleague/flysystem-aws-s3-v3)
-[Image](https://github.com/Intervention/image)
-[Laravel Markdown](https://github.com/GrahamCampbell/Laravel-Markdown)
+- [AWS SDK PHP](https://github.com/aws/aws-sdk-php)
+- [Carbon](https://github.com/briannesbitt/carbon)
+- [DBAL](https://github.com/doctrine/dbal)
+- [Flysystem AWS S3](https://github.com/thephpleague/flysystem-aws-s3-v3)
+- [Image](https://github.com/Intervention/image)
+- [Laravel Markdown](https://github.com/GrahamCampbell/Laravel-Markdown)
