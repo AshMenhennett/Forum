@@ -13,7 +13,7 @@ This is a repository for a forum app, built with Laravel 5.3 and Vue 2.
 
 
 ##Commands
-There are a coupld of commands for use with this application:
+There are a couple of commands for use with this application:
 - When the 'to-be' Administrator registers for an account, it is necessary to execute the ```alter:role``` command via command line, after they have registered, passing in the id of the ```User``` and the role (i.e. ```admin```). Eg. ```php artisan alter:role 1 admin```. This is currently the only logical way of elevating a specified user, when no other ```admin```s exist.
 - The local storage of avatars will have to be cleaned every now and then. To do so, execute the following command ```php artisan clear:avatars```. They exist in the application storage, as they are uploaded to the applications storage, before being uploaded to Amazon's S3. *They are currently not being automatically deleted from local storage after uploading to S3*.
 
@@ -27,7 +27,7 @@ There are a coupld of commands for use with this application:
 - Users can manage their own profile including making changes to their password and avatar image.
 - All subscribed ```User```s recieve emails, via a triggered event when a ```Topic``` that they are subscribed to has a ```Post``` added to it.
 - Moderators are alerted via email when content in reported and they can easily manage these reports in the Moderator Dashboard.
-- Other expected events are raised, check out ```App\Events``` and ```App\Listeners``` for further insight. See ```App\Providers\EventServiceProvider```s ```$listen``` property for the association of ```Event```s and ```Listener```s.
+- Other expected events are raised, check out ```App\Events``` and ```App\Listeners``` for further insight. See ```App\Providers\EventServiceProvider```'s ```$listen``` property for the association of ```Event```s and ```Listener```s.
 
 ##Installation & Configuration
 If you would like to install this project, treat it as you would any other Laravel application, keeping in mind some additional crucial environment variables:
