@@ -21,6 +21,8 @@ There are a coupld of commands for use with this application:
 - ```User```s may subscribe to any ```Topic```s and may report any ```Topic``` or ```Post``` for moderation.
 - Each user may have many ```Topic```s and ```Post```s.
 - Each ```Topic``` and ```Post``` belongs to exactly one ```User```.
+- Owners of ```Post```s or eleveated ```User```s may modify or delete ```Post```s.
+- Only ```admin``` and ```moderator``` accounts may delete ```Topic```s.
 - Users can manage their own profile including making changes to their password and avatar image.
 - All subscribed ```User```s recieve emails, via a triggered event when a ```Topic``` that they are subscribed to has a ```Post``` added to it.
 - Moderators are alerted via email when content in reported and they can easily manage these reports in the Moderator Dashboard.
@@ -70,6 +72,7 @@ Editing a profile
 
 ##Packages
 [AWS SDK PHP](https://github.com/aws/aws-sdk-php)
+[Carbon](https://github.com/briannesbitt/carbon)
 [DBAL](https://github.com/doctrine/dbal)
 [Flysystem AWS S3](https://github.com/thephpleague/flysystem-aws-s3-v3)
 [Image](https://github.com/Intervention/image)
