@@ -34,6 +34,9 @@ class EventServiceProvider extends ServiceProvider
         'App\Events\UserRoleModified' => [
             'App\Listeners\SendUserRoleModifiedEmail',
         ],
+        'App\Events\UsersMentioned' => [
+            'App\Listeners\SendUsersMentionedEmail',
+        ],
     ];
 
     /**

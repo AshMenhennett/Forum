@@ -8,8 +8,12 @@ This is a repository for a forum app, built with Laravel 5.3 and Vue 2.
 - Ability for users to subscribe to ```Topic```s.
 - Ability for users to 'report' ```Post```s and ```Topic```s.
 - Avatar image uploading to Amazon S3 storage.
-- Markdown support for creating posts.
-- Auto generation of user profile links, when mentioned in a post. I.e. ```@ashmenhennett```.
+- Markdown support for creating posts. *All posts are stored in database as Markdown and converted to HTML, when needed*
+- @mention functionality, alerting ```User```s by email when they are mentioned in a post. Including auto link generation, when a ```User``` uses the @mention functionality. I.e ```@ashmenhennett``` will be converted to a ```[@ashmenhennett](http://example.com/user/profile/@ashmenhennett)```.
+
+EventServiceProvider
+
+$listen
 
 ##Commands
 There are a coupld of commands for use with this application:

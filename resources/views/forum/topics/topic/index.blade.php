@@ -35,7 +35,7 @@
                                 <br /><br /><br />
                                 <p>
                                     {!! GrahamCampbell\Markdown\Facades\Markdown::convertToHtml(
-                                        App\AutolinkUsername::parse($post->body)
+                                        $post->body
                                     ) !!}
                                 </p>
                                 @can ('edit', $post)
@@ -67,7 +67,7 @@
                                 @endif
                             </div>
                             <div class="help-block pull-left">
-                                Feel free to use Markdown.
+                                Feel free to use Markdown. Use @username to mention another user.
                             </div>
                             {{ csrf_field() }}
                             <button type="submit" class="btn btn-default pull-right">Add Reply</button>
