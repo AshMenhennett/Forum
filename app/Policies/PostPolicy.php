@@ -20,12 +20,17 @@ class PostPolicy
         //
     }
 
-    public function edit(User $user, Post $post)
+    public function edit (User $user, Post $post)
     {
         return $user->id === $post->user_id || $user->isElevated();
     }
 
-    public function delete(User $user, Post $post)
+    public function update (User $user, Post $post)
+    {
+        return $user->id === $post->user_id || $user->isElevated();
+    }
+
+    public function delete (User $user, Post $post)
     {
         return $user->id === $post->user_id || $user->isElevated();
     }

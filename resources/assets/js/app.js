@@ -14,7 +14,7 @@ var VueResource = require('vue-resource');
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-Vue.component('delete-users', require('./components/AdminDeleteUsersComponent.vue'));
+Vue.component('modify-users', require('./components/AdminModifyUsersComponent.vue'));
 Vue.component('subscribe-button', require('./components/SubscribeButtonComponent.vue'));
 Vue.component('report-topic-button', require('./components/ReportTopicComponent.vue'));
 Vue.component('report-post-button', require('./components/ReportPostComponent.vue'));

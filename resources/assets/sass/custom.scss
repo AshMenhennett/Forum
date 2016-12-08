@@ -11,6 +11,12 @@ form.custom-horizontal {
     }
 }
 
+.btn.btn-top-mar {
+        @media (min-width: 992px) {
+            margin-top: 26px;
+        }
+    }
+
 .inline {
     display: inline-block;
 }

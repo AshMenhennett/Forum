@@ -23,8 +23,9 @@ class InviteDashboardFormRequest extends FormRequest
      */
     public function rules()
     {
+        // leveraging unique:users, email. We don't want to send an Invite to a User that already exists.
         return [
-            'inviteeEmail' => 'required|email',
+            'inviteeEmail' => 'required|email|unique:users,email',
             'inviteeRole' => 'required|in:user,moderator,admin',
         ];
     }

@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use Mail;
-use Gate;
 use Config;
 use App\User;
 use App\Invite;
@@ -16,44 +15,63 @@ use App\Http\Requests\UpdateDashboardFormRequest;
 class AdministratorDashboardController extends Controller
 {
 
-    // no authorization here, all taken care of by auth.admin middleware
+    /**
+     * no authorization here, all taken care of by auth.admin middleware
+     */
 
-    protected function getUsers(Request $request)
+    /**
+     * Returns all users (except current User) as a Collection.
+     * Used by index (Request $request).
+     *
+     * @param  Illuminate\Http\Request $request
+     * @return Illuminate\Database\Eloquent\Collection
+     */
+    protected function getUsers (Request $request)
     {
-        // get all users, except current user
         return User::where('id', '!=', $request->user()->id)->orderBy('id', 'asc')->get();
     }
 
-    public function index(Request $request)
+    /**
+     * Displays Admin User Dashboard.
+     *
+     * @param  Illuminate\Http\Request $request
+     * @return Illuminate\Http\Response
+     */
+    public function index (Request $request)
     {
         $users = $this->getUsers($request);
 
         return view('admin.dashboard.index', [
             'users' => $users,
         ]);
-
     }
 
-    public function update(UpdateDashboardFormRequest $request)
+    /**
+     * Updates a user's role.
+     *
+     * @param  App\Http\Requests\UpdateDashboardFormRequest $request
+     * @return Illuminate\Http\Response
+     */
+    public function update (UpdateDashboardFormRequest $request)
     {
-
         // $request->user is the submitted user id
 
         if (!count(User::where('id', $request->user)->get())) {
             // user isn't in db
             // form was corrupted, false data submitted
-            return false;
+            abort(400);
         }
 
-        if ($request->user === $request->user()->id) {
+        if ($request->user == $request->user()->id) {
             // user submitted is current user
-            return false;
+            abort(400);
         }
 
-        if (!in_array($request->role, Config::get('enums.roles'))) {
+        if (! in_array($request->role, Config::get('enums.roles'))) {
             // role selected is not valid
             // form was corrupted, false data submitted
-            return false;
+            // also caught by UpdateDashboardFormRequest
+            abort(400);
         }
 
         $user = User::findOrFail($request->user);
@@ -66,21 +84,22 @@ class AdministratorDashboardController extends Controller
         return redirect()->route('admin.dashboard.index');
     }
 
-    public function invite(InviteDashboardFormRequest $request)
+    /**
+     * Send out an account registration invitation, with a pre-defined User role.
+     *
+     * @param  App\Http\Requests\InviteDashboardFormRequest $request
+     * @return Illuminate\Http\Response
+     */
+    public function invite (InviteDashboardFormRequest $request)
     {
          if (count(User::where('email', $request->inviteeEmail)->get())) {
-            // user submitted does belong in db
-            return false;
+            // user submitted already exists
+            abort(400);
         }
 
-        if ($request->inviteeEmail === $request->user()->email) {
-            // user submitted is current user
-            return false;
-        }
-
-        if (!in_array($request->inviteeRole, Config::get('enums.roles'))) {
+        if (! in_array($request->inviteeRole, Config::get('enums.roles'))) {
             // form was corrupted, false data submitted
-            return false;
+            abort(400);
         }
 
         $code = md5(utf8_encode(openssl_random_pseudo_bytes(12)));
@@ -91,14 +110,20 @@ class AdministratorDashboardController extends Controller
         $invite->role = $request->inviteeRole;
         $invite->save();
 
-        // send mail
-        Mail::to($invite->email)->send(new Invited($invite));
+        Mail::to($invite->email)->queue(new Invited($invite));
 
         return redirect()->route('admin.dashboard.index');
-
     }
 
-    public function destroy(Request $request, User $user)
+    /**
+     * Deletes a User.
+     * Used by AdminDeleteUsersComponent Vue component.
+     *
+     * @param  Illuminate\Http\Request   $request
+     * @param  App\User                  $user
+     * @return Illuminate\Http\Response
+     */
+    public function destroy (User $user)
     {
         $user->delete();
 

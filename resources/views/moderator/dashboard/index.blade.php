@@ -17,7 +17,7 @@
                             <tbody>
                                 @foreach ($reports as $report)
                                     <tr>
-                                        <td><a href="{{ route('user.profile.index', $report->user->name) }}">{{ $report->user->name }}</a></td>
+                                        <td><a href="{{ route('user.profile.index', $report->user->name) }}">{{ '@' . $report->user->name }}</a></td>
                                         <td>{{ $report->isPost() ? 'Post' : 'Topic' }}</td>
                                         @if ($report->contentExists())
                                             <td>"{{ $report->isPost() ? ((strlen($report->getPostBody($report->content_id)) >= 25) ? str_limit($report->getPostBody($report->content_id), 24) . '&hellip;' : $report->getPostBody($report->content_id)) : $report->getTopicSlug() }}"</td>

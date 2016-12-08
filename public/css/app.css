@@ -5770,6 +5770,10 @@ button.close {
   form.custom-horizontal .btn {
     margin-top: 26px; } }
 
+@media (min-width: 992px) {
+  .btn.btn-top-mar {
+    margin-top: 26px; } }
+
 .inline {
   display: inline-block; }
 

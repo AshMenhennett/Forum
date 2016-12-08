@@ -22,7 +22,9 @@
     <script>
         window.Forum = <?php echo json_encode([
             'auth' => Auth::check(),
+            'roles' => Config::get('enums.roles')
         ]); ?>
+
     </script>
 </head>
 <body>
