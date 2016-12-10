@@ -10,14 +10,30 @@ use App\Events\PostReported;
 
 class PostsReportController extends Controller
 {
-    public function status(Request $request, Topic $topic, Post $post)
+    /**
+     * Returns a Report for a Post.
+     * Utilized by ReportPostComponent Vue component.
+     *
+     * @param  App\Topic               $topic
+     * @param  App\Post                $post
+     * @return Illuminate\Http\Response
+     */
+    public function status (Topic $topic, Post $post)
     {
-        $report = Report::where('type', Post::Class)->where('content_id', $post->id)->first();
+        $report = Report::where('type', Post::class)->where('content_id', $post->id)->first();
 
         return response()->json($report, 200);
     }
 
-    public function report(Request $request, Topic $topic, Post $post)
+    /**
+     * Creates a Report for a Post.
+     *
+     * @param  Illuminate\Http\Request  $request
+     * @param  App\Topic                $topic
+     * @param  App\Post                 $post
+     * @return Illuminate\Http\Response
+     */
+    public function report (Request $request, Topic $topic, Post $post)
     {
         // no need for authorization, protected by auth middleware
         $report = new Report();

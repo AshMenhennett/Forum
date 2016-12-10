@@ -11,20 +11,36 @@ use Illuminate\Http\Request;
 class SubscriptionsController extends Controller
 {
 
-    public function getSubscriptionStatus(Request $request, Topic $topic)
+    /**
+     * Returns a user's subscription status, regarding a given Topic.
+     * Utilized by SubscribeButtonComponent Vue component.
+     *
+     * @param  Illuminate\Http\Request  $request
+     * @param  App\Topic                $topic
+     * @return Illuminate\Http\Response
+     */
+    public function getSubscriptionStatus (Request $request, Topic $topic)
     {
-
         $user = $request->user();
         $subscription = $user->isSubscribedTo($topic);
+
         if ($subscription !== null) {
             // was already a subscription, send back the subscription status
             return $subscription->subscribed;
         }
+
         // was no subscription..
         return null;
     }
 
-    public function handleSubscription(Request $request, Topic $topic)
+    /**
+     * Subscribes or unsubscribes a User from a Topic.
+     *
+     * @param  Illuminate\Http\Request  $request
+     * @param  App\Topic                $topic
+     * @return Illuminate\Http\Response
+     */
+    public function handleSubscription (Request $request, Topic $topic)
     {
         $user = $request->user();
         $subscription = $user->isSubscribedTo($topic);

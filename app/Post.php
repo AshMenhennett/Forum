@@ -18,12 +18,22 @@ class Post extends Model
         'user_id', 'topic_id', 'body',
     ];
 
-    public function topic()
+    /**
+     * Each Post belongs to a Topic.
+     *
+     * @return Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function topic ()
     {
         return $this->belongsTo(Topic::class);
     }
 
-    public function user()
+    /**
+     * Each Post belongs to a User.
+     *
+     * @return Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function user ()
     {
         return $this->belongsTo(User::class);
     }

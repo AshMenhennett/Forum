@@ -73,8 +73,7 @@
                                         <li><a href="{{ route('moderator.dashboard.index') }}">Moderator Dashboard</a></li>
                                     @endif
                                     <li><a href="{{ route('home.index') }}">My Topics</a></li>
-                                    <li><a href="{{ route('user.profile.index', [Auth::user()->name]) }}">Profile</a></li>
-                                    <li><a href="{{ route('user.settings.index') }}">Settings</a></li>
+                                    <li><a href="{{ route('user.profile.index', Auth::user()->name) }}">Profile</a></li>
                                     <li>
                                         <a href="{{ url('/logout') }}"
                                             onclick="event.preventDefault();

@@ -55,9 +55,9 @@ Route::group(['middleware' => ['log.activity']], function() {
         });
 
         // user profile modification
-        Route::group(['prefix' => 'user'], function() {
-            Route::get('/settings', 'SettingsController@index')->name('user.settings.index');
-            Route::post('/settings/update/', 'SettingsController@update')->name('user.settings.update');
+        Route::group(['prefix' => 'user/profile'], function() {
+            Route::get('/@{user}/settings', 'ProfileSettingsController@index')->name('user.profile.settings.index');
+            Route::post('/@{user}/settings/update/', 'ProfileSettingsController@update')->name('user.profile.settings.update');
         });
 
         // admin routing

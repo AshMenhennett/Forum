@@ -63,7 +63,7 @@ class RegisterController extends Controller
      * @param  array  $data
      * @return User
      */
-    protected function create(array $data)
+    protected function create (array $data)
     {
         // explicity set user role, even though default is 'user'
         $role = 'user';

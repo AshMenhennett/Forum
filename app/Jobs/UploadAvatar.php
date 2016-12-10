@@ -36,7 +36,7 @@ class UploadAvatar implements ShouldQueue
      */
     public function handle()
     {
-
+        // uploads a user's avatar to S3
         $path = storage_path() . '/avatars/' . $this->fileId;
         $fileName = $this->fileId . '.png';
 

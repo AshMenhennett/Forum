@@ -10,40 +10,66 @@ use App\Subscription;
 use App\Events\TopicDeleted;
 use Illuminate\Http\Request;
 use App\Events\UsersMentioned;
+use Illuminate\Support\Collection;
 use App\Http\Requests\CreateTopicFormRequest;
 
 class TopicsController extends Controller
 {
 
+    /**
+     * Returns a collection of users who were '@mentioned'
+     *
+     * @param  Illuminate\Http\Request $request
+     * @return Illuminate\Support\Collection
+     */
     protected function getMentionedUsers (Request $request)
     {
-        // @mention functionality
         $matches = [];
-        $mentioned_users = collect([]);
+        $mentioned_users = new Collection();
         // get usernames mentioned and put into $matches
         preg_match_all('/\@\w+/', $request->post, $matches);
         for ($i = 0; $i < count($matches[0]); $i++) {
             // get User objects from mentioned @usernames
             $mentioned_users->push(User::where('name', str_replace('@', '', $matches[0][$i]))->first());
         }
-        // remove current user from list of mentioned users, we don't want to email them about mentioning themselves, if they happen to..
-        $mentioned_users = $mentioned_users->reject(function ($value, $key) {
-            return $value->id === Auth::user()->id;
-        });
+
+        if (count($mentioned_users)) {
+            // remove null value in Collection and remove current user from list of mentioned users, we don't want to email them about mentioning themselves, if they happen to..
+            $mentioned_users = $mentioned_users->reject(function ($value, $key) {
+                if ($value !== null) {
+                    return $value->id === Auth::user()->id;
+                } else {
+                    return true;
+                }
+            });
+        }
 
         return $mentioned_users;
     }
 
-    public function index()
+    /**
+     * Displays all Topics.
+     * Newest topics go first.
+     *
+     * @return Illuminate\Http\Response
+     */
+    public function index ()
     {
-        $topics = Topic::all();
+        $topics = Topic::orderBy('created_at', 'desc')->get();
 
         return view('forum.topics.index', [
             'topics' => $topics,
         ]);
     }
 
-    public function show(Request $request, Topic $topic)
+    /**
+     * Display a Topic and its posts.
+     *
+     * @param  Illuminate\Http\Request  $request
+     * @param  App\Topic                $topic
+     * @return Illuminate\Http\Response
+     */
+    public function show (Request $request, Topic $topic)
     {
         $posts = $topic->posts()->get();
 
@@ -53,13 +79,25 @@ class TopicsController extends Controller
         ]);
     }
 
-    public function showCreateForm()
+    /**
+     * Displays a form to create a Topic.
+     *
+     * @return Illuminate\Http\Response
+     */
+    public function showCreateForm ()
     {
         return view('forum.topics.topic.create.form');
     }
 
-    public function create(CreateTopicFormRequest $request)
+    /**
+     * Creates a Topic.
+     *
+     * @param  App\Http\Requests\CreateTopicFormRequest $request
+     * @return Illuminate\Http\Response
+     */
+    public function create (CreateTopicFormRequest $request)
     {
+        // create the Topic
         //$request->title ==== topic title
         $topic = new topic();
         $topic->user_id = $request->user()->id;
@@ -69,6 +107,7 @@ class TopicsController extends Controller
         $topic->title = $request->title;
         $topic->save();
 
+        // create the first Post of the Topic, which is the 'body' of the Topic.
         $post = new Post();
         $post->topic_id = $topic->id;
         $post->user_id = $request->user()->id;
@@ -80,11 +119,13 @@ class TopicsController extends Controller
 
         $post->save();
 
+        // do the @menttion functionality
         $mentioned_users = $this->getMentionedUsers($request);
         if (count($mentioned_users)) {
             event(new UsersMentioned($mentioned_users, $topic, $post));
         }
 
+        // create the subscription
         $subscription = new Subscription();
         $subscription->topic_id = $topic->id;
         $subscription->user_id = $request->user()->id;
@@ -96,9 +137,17 @@ class TopicsController extends Controller
         ]);
     }
 
-    public function destroy(Request $request, Topic $topic)
+    /**
+     * Deletes a Topic.
+     *
+     * @param  Illuminate\Http\Request  $request
+     * @param  App\Topic                $topic
+     * @return Illuminate\Http\Response
+     */
+    public function destroy (Request $request, Topic $topic)
     {
         // don't need to use policy here, as auth.elevated middleware is being use for the route associated with this controller method invocation
+        // we don't allow users to delete a Topic, not even their own, unless they have an elevated User role.
         $topic->delete();
 
         if ($topic->user->id !== $request->user()->id) {

@@ -10,15 +10,15 @@
                 <div class="panel-body">
                     <img src="{{ Config::get('s3.buckets.images') . '/avatars/' . ($user->hasCustomAvatar() ?  $user->avatar : 'avatar-blank.png') }}" class="img-thumbnail pull-left" width="100" height="100" alt="{{ $user->name }}-avatar">
                     @if (Auth::check() && Auth::user()->id === $user->id)
-                        <a href="{{ route('user.settings.index') }}" class="pull-right"><span class="glyphicon glyphicon-pencil"></span></a>
+                        <a href="{{ route('user.profile.settings.index', Auth::user()->name) }}" class="pull-right"><span class="glyphicon glyphicon-pencil"></span></a>
                     @endif
                     <strong>Username:</strong> {{ $user->name }}
                     <br />
                     <strong>Account:</strong> {{ ucfirst($user->role) }}
-                    @if (Auth::user()->isElevated() || Auth::user()->id === $user->id)
+                    @if (Auth::check() && Auth::user()->isElevated() || Auth::check() && Auth::user()->id === $user->id)
                         <br />
                         <strong>Email:</strong> <a href="mailto:{{ $user->email }}">{{ $user->email }}</a>
-                        @if (Auth::user()->id === $user->id)
+                        @if (Auth::check() && Auth::user()->id === $user->id)
                             <span class="text-muted"><span class="glyphicon glyphicon-exclamation-sign" title="Your email address is only visible to you and elevated account users."></span></span>
                         @endif
                     @endif

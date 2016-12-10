@@ -14,7 +14,13 @@
                             <strong>Awesome!</strong> Your avatar will be visible in the next few seconds, depending on how large the file is. Give the page a refresh.
                         </div>
                     @endif
-                    <form action="{{ route('user.settings.update') }}" method="post" enctype="multipart/form-data">
+                    @if (Session::get('password_update_success') === true)
+                        <div class="alert alert-success alert-dismissible" role="alert">
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                            <strong>Yipee!</strong> Your password has been updated!
+                        </div>
+                    @endif
+                    <form action="{{ route('user.profile.settings.update', Auth::user()->name) }}" method="post" enctype="multipart/form-data">
                         <h4>Change avatar</h4>
                         <img src="{{ Config::get('s3.buckets.images') . '/avatars/' . ($user->hasCustomAvatar() ?  $user->avatar : 'avatar-blank.png') }}" class="img-thumbnail" width="100" height="100" alt="{{ $user->name }}-avatar">
                         <div class="form-group{{ $errors->has('avatar') ? ' has-error' : '' }}">

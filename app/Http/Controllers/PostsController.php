@@ -21,12 +21,12 @@ class PostsController extends Controller
      * Returns a collection of users who were '@mentioned'
      *
      * @param  Illuminate\Http\Request $request
-     * @return Illuminate\Database\Eloquent\Collection
+     * @return Illuminate\Support\Collection
      */
     protected function getMentionedUsers (Request $request)
     {
         $matches = [];
-        $mentioned_users = collect([]);
+        $mentioned_users = new Collection();
         // get usernames mentioned and put into $matches
         preg_match_all('/\@\w+/', $request->post, $matches);
         for ($i = 0; $i < count($matches[0]); $i++) {
@@ -35,10 +35,12 @@ class PostsController extends Controller
         }
 
         if (count($mentioned_users)) {
-            // remove current user from list of mentioned users, we don't want to email them about mentioning themselves, if they happen to..
+            // remove null value in Collection and remove current user from list of mentioned users, we don't want to email them about mentioning themselves, if they happen to..
             $mentioned_users = $mentioned_users->reject(function ($value, $key) {
                 if ($value !== null) {
                     return $value->id === Auth::user()->id;
+                } else {
+                    return true;
                 }
             });
         }
@@ -58,7 +60,6 @@ class PostsController extends Controller
         $post = new Post();
         $post->topic_id = $topic->id;
         $post->user_id = $request->user()->id;
-
         // change @username to markdown link
         // I.e. @username -> [@username](APP_URL/user/profile/@username)
         $url = env('APP_URL');
@@ -74,6 +75,7 @@ class PostsController extends Controller
 
         event(new UserPostedOnTopic($topic, $post, $request->user()));
 
+
         return redirect()->route('forum.topics.topic.show', [
             'topic' => $topic,
         ]);
@@ -82,7 +84,7 @@ class PostsController extends Controller
     /**
      * Displays a form to edit a Post.
      *
-     * @param  Illuminate\Htto\Request  $request
+     * @param  Illuminate\Http\Request  $request
      * @param  App\Topic                $topic
      * @param  App\Post                 $post
      * @return Illuminate\Http\Response
