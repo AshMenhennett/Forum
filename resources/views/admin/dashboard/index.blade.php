@@ -10,7 +10,7 @@
                     <form class="custom-horizontal" action="{{ route('admin.dashboard.invite') }}" method="post">
                         <div class="form-group col-md-6{{ $errors->has('inviteeEmail') ? ' has-error' : '' }}">
                             <label for="inviteeEmail" class="control-label">Email address of invitee</label>
-                            <input type="email" name="inviteeEmail" id="inviteeEmail" class="form-control" placeholder="Enter the email address of invitee">
+                            <input type="email" name="inviteeEmail" id="inviteeEmail" class="form-control" value="{{ (old('inviteeEmail') ? old('inviteeEmail') : '' ) }}" placeholder="Enter the email address of invitee">
                             @if ($errors->has('inviteeEmail'))
                                 <div class="help-block danger">
                                     {{ $errors->first('inviteeEmail') }}

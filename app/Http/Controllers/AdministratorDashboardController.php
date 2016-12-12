@@ -32,7 +32,7 @@ class AdministratorDashboardController extends Controller
     }
 
     /**
-     * Displays Admin User Dashboard.
+     * Displays Admin User Dashboard (inc. AdminModifyUsersComponent Vue component).
      *
      * @param  Illuminate\Http\Request $request
      * @return Illuminate\Http\Response

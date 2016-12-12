@@ -59,7 +59,7 @@
                         <form action="{{ route('forum.topics.posts.create.submit', $topic) }}" method="post">
                             <div class="form-group{{ $errors->has('post') ? ' has-error' : '' }}">
                                 <label for="post" class="control-label">Your Reply</label>
-                                <textarea name="post" id="post" class="form-control" placeholder="Your reply to {{ $topic->title }}" rows="8"></textarea>
+                                <textarea name="post" id="post" class="form-control" placeholder="Your reply to {{ $topic->title }}" rows="8" required></textarea>
                                 @if ($errors->has('post'))
                                     <div class="help-block danger">
                                         {{ $errors->first('post') }}

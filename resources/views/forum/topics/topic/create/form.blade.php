@@ -11,7 +11,7 @@
                     <form action="{{ route('forum.topics.create.submit') }}" method="post">
                         <div class="form-group{{ $errors->has('title') ? ' has-error' : '' }}">
                             <label for="title" class="control-label">Topic Title</label>
-                            <input type="text" name="title" id="title" class="form-control" placeholder="Halt! Crocs?">
+                            <input type="text" name="title" id="title" class="form-control" value="{{ (old('title') ? old('title') : '' ) }}" placeholder="Halt! Crocs?">
                             @if ($errors->has('title'))
                                 <div class="help-block danger">
                                     {{ $errors->first('title') }}
@@ -23,7 +23,7 @@
                         </div>
                         <div class="form-group{{ $errors->has('post') ? ' has-error' : '' }}">
                             <label for="post" class="control-label">Your Post</label>
-                            <textarea name="post" id="post" class="form-control" placeholder="What is your opinion on crocs?" rows="8"></textarea>
+                            <textarea name="post" id="post" class="form-control" placeholder="What is your opinion on crocs?" rows="8">{{ (old('post') ? old('post') : '' ) }}</textarea>
                             @if ($errors->has('post'))
                                 <div class="help-block danger">
                                     {{ $errors->first('post') }}

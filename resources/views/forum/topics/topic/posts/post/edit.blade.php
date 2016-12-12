@@ -12,7 +12,7 @@
                     <form action="{{ route('forum.topics.topic.posts.post.update', [$topic, $post]) }}" method="post">
                         <div class="form-group{{ $errors->has('post') ? ' has-error' : '' }}">
                             <label for="post" class="control-label">Post</label>
-                            <textarea name="post" id="post" class="form-control" rows="8">{{ $post->body }}</textarea>
+                            <textarea name="post" id="post" class="form-control" rows="8" required>{{ $post->body }}</textarea>
                             @if ($errors->has('post'))
                                 <div class="help-block danger">
                                     {{ $errors->first('post') }}

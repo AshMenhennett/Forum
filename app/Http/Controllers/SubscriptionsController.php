@@ -34,7 +34,7 @@ class SubscriptionsController extends Controller
     }
 
     /**
-     * Subscribes or unsubscribes a User from a Topic.
+     * Subscribes or unsubscribes a User from a Topic (SubscribeButtonComponent Vue component).
      *
      * @param  Illuminate\Http\Request  $request
      * @param  App\Topic                $topic

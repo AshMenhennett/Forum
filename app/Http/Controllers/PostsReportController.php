@@ -27,6 +27,7 @@ class PostsReportController extends Controller
 
     /**
      * Creates a Report for a Post.
+     * Utilized by ReportPostComponent Vue component.
      *
      * @param  Illuminate\Http\Request  $request
      * @param  App\Topic                $topic
