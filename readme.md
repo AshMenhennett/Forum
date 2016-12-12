@@ -70,6 +70,10 @@ User profile view
 Editing a profile
 ![Edit Profile](https://cloud.githubusercontent.com/assets/9494635/20865191/631bde9a-ba5b-11e6-9a68-b4d337ae4c0a.PNG)
 
+##Routes
+![Routes]https://cloud.githubusercontent.com/assets/9494635/21092663/ab23d970-c09d-11e6-86cb-de620c2b88a6.PNG)
+Thanks to [Pretty Routes](https://github.com/garygreen/pretty-routes)
+
 ##Packages
 - [AWS SDK PHP](https://github.com/aws/aws-sdk-php)
 - [Carbon](https://github.com/briannesbitt/carbon)
