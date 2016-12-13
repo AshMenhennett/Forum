@@ -4,29 +4,27 @@ This is a repository for a forum app, built with Laravel 5.3 and Vue 2.
 
 ##Highlights
 - User role system, including Administrators (```admin```),  Moderators (```moderator```) and standard Users (```user```).
-- Ability for Administrators to invite new users, with a specific role, as well as the ability to modify of current ```User```s.
+- Ability for Administrators to invite new users, with a specific role, as well as the ability to modify current ```User```'s roles.
 - Ability for users to subscribe to ```Topic```s.
 - Ability for users to 'report' ```Post```s and ```Topic```s.
 - Avatar image uploading to Amazon S3 storage.
-- Markdown support for creating posts. *All posts are stored in database as Markdown and converted to HTML, when needed*
-- @mention functionality, alerting ```User```s by email when they are mentioned in a post. Including auto link generation, when a ```User``` uses the @mention functionality. I.e ```@ashmenhennett``` will be converted to a ```[@ashmenhennett](http://example.com/user/profile/@ashmenhennett)```.
+- Markdown support for creating posts. *All posts are stored in database as Markdown and are converted to HTML, when needed*
+- @mention functionality, alerting ```User```s by email when they are mentioned in a post. Including auto link generation, when a ```User``` uses the @mention functionality. I.e ```@ashmenhennett``` will be converted to ```[@ashmenhennett](http://example.com/user/profile/@ashmenhennett)```.
 
 
 ##Commands
 There are a couple of commands for use with this application:
-- When the 'to-be' Administrator registers for an account, it is necessary to execute the ```alter:role``` command via command line, after they have registered, passing in the id of the ```User``` and the role (i.e. ```admin```). Eg. ```php artisan alter:role 1 admin```. This is currently the only logical way of elevating a specified user, when no other ```admin```s exist.
+- When the 'to-be' Administrator registers for an account, it is necessary to execute the ```alter:role``` command via command line, after they have registered, passing in the id of the ```User``` and the role (i.e. ```admin```). Eg. ```php artisan alter:role 1 admin```. This is currently the only logical way of elevating a specific user, when no other ```admin```s exist.
 - The local storage of avatars will have to be cleaned every now and then. To do so, execute the following command ```php artisan clear:avatars```. They exist in the application storage, as they are uploaded to the applications storage, before being uploaded to Amazon's S3. *They are currently not being automatically deleted from local storage after uploading to S3*.
 
 ##Functionality
 - ```User```s can register and create ```Topic```s and ```Post```s.
 - ```User```s may subscribe to any ```Topic```s and may report any ```Topic``` or ```Post``` for moderation.
-- Each user may have many ```Topic```s and ```Post```s.
-- Each ```Topic``` and ```Post``` belongs to exactly one ```User```.
 - Owners of ```Post```s or eleveated ```User```s may modify or delete ```Post```s.
 - Only ```admin``` and ```moderator``` accounts may delete ```Topic```s.
-- Users can manage their own profile including making changes to their password and avatar image.
+- Users can manage their own profile changing to their password and avatar image.
 - All subscribed ```User```s recieve emails, via a triggered event when a ```Topic``` that they are subscribed to has a ```Post``` added to it.
-- Moderators are alerted via email when content in reported and they can easily manage these reports in the Moderator Dashboard.
+- Moderators are alerted via email when content is reported and they can easily manage these reports in the Moderator Dashboard.
 - Other expected events are raised, check out ```App\Events``` and ```App\Listeners``` for further insight. See ```App\Providers\EventServiceProvider```'s ```$listen``` property for the association of ```Event```s and ```Listener```s.
 
 ##Installation & Configuration
