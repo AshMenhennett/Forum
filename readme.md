@@ -35,7 +35,7 @@ If you would like to install this project, treat it as you would any other Larav
 - Generate application key ```php artisan key:generate```.
 - Run Laravel migrations- ```php artisan migrate```.
 
-Make sure you add these additional environment variables:
+Make sure you configure these environment variables:
 - ```APP_URL``` : the url of the application. This variable is used for linking to the application in emails.
 - ```APP_NAME```: the human readable name of the application. This variable is used for refering to the application via emails. It is also used in the navbar as the application branding.
 - ```MAIL_FROM_EMAIL``` and ```MAIL_FROM_NAME```: the 'from' email address and name. This is used for sending out emails.
