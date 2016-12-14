@@ -86,3 +86,7 @@ Thanks to [Pretty Routes](https://github.com/garygreen/pretty-routes)
 - [Flysystem AWS S3](https://github.com/thephpleague/flysystem-aws-s3-v3)
 - [Image](https://github.com/Intervention/image)
 - [Laravel Markdown](https://github.com/GrahamCampbell/Laravel-Markdown)
+
+##License
+[MIT](https://s3-ap-southeast-2.amazonaws.com/ashleymenhennett/LICENSE)
+
