@@ -42,7 +42,7 @@ Make sure you configure these environment variables:
 - ```S3_KEY```, ```S3_SECRET```, ```S3_REGION```, ```S3_BUCKET_NAME``` and ```S3_IMG_BUCKET_URL```: the conncetion to Amazon S3 variables. These values are used for the avatar uploading facility built in to the application.
 
 Further steps:
-- Make sure you set the ```QUEUE_DRIVER``` environment variable to ```database```.
+- Make sure you set the ```QUEUE_DRIVER``` environment variable to ```database```. Mail is sent using the default queue and the ```UploadAvatar``` Job also uses the default queue, so make sure you are running the queue work command: ```php artisan queue:work```.
 - Set the ```APP_ENV``` environment variable to ```production``` when the app is on a live sever, to force HTTPS connections on all routes.
 - Make sure that you configure your Amazon S3 bucket with a policy that will allow the application to upload avatars to it.
 
