@@ -28,6 +28,6 @@ class SendTopicOwnerSubscriptionCreatedEmail implements ShouldQueue
      */
     public function handle(UserSubscribedToTopic $event)
     {
-        Mail::to($event->topic->user()->get())->queue(new UserSubscribedToTopicEmail($event->topic));
+        Mail::to($event->topic->user()->first())->queue(new UserSubscribedToTopicEmail($event->topic));
     }
 }
