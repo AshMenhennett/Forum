@@ -99,7 +99,6 @@ Thanks to [Pretty Routes](https://github.com/garygreen/pretty-routes)
 - [Image](https://github.com/Intervention/image)
 - [Laravel Markdown](https://github.com/GrahamCampbell/Laravel-Markdown)
 
-
 - [Laravel Echo](https://github.com/laravel/echo)
 - [Pusher](https://github.com/pusher/pusher-js)
 
