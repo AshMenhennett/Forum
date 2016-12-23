@@ -19,6 +19,7 @@ Vue.component('subscribe-button', require('./components/SubscribeButtonComponent
 Vue.component('report-topic-button', require('./components/ReportTopicComponent.vue'));
 Vue.component('report-post-button', require('./components/ReportPostComponent.vue'));
 Vue.component('delete-report', require('./components/ModeratorDeleteReportButtonComponent.vue'));
+Vue.component('messaging', require('./components/UserMessagingComponent.vue'));
 
 Vue.use(VueResource);
 

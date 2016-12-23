@@ -3,14 +3,14 @@
 This is a repository for a forum app, built with Laravel 5.3 and Vue 2.
 
 ##Highlights
+- @mention functionality, alerting ```User```s by email when they are mentioned in a post. Including auto link generation, when a ```User``` uses the @mention functionality. I.e ```@ashmenhennett``` will be converted to ```[@ashmenhennett](http://example.com/user/profile/@ashmenhennett)```.
+- Internal user messaging system, in realtime, using  ```pusher-js``` and ```Laravl-Echo```.
 - User role system, including Administrators (```admin```),  Moderators (```moderator```) and standard Users (```user```).
 - Ability for Administrators to invite new users, with a specific role, as well as the ability to modify current ```User```'s roles.
 - Ability for users to subscribe to ```Topic```s.
 - Ability for users to 'report' ```Post```s and ```Topic```s.
 - Avatar image uploading to Amazon S3 storage.
 - Markdown support for creating posts. *All posts are stored in database as Markdown and are converted to HTML, when needed*
-- @mention functionality, alerting ```User```s by email when they are mentioned in a post. Including auto link generation, when a ```User``` uses the @mention functionality. I.e ```@ashmenhennett``` will be converted to ```[@ashmenhennett](http://example.com/user/profile/@ashmenhennett)```.
-
 
 ##Commands
 There are a couple of commands for use with this application:
@@ -20,17 +20,19 @@ There are a couple of commands for use with this application:
 ##Functionality
 - ```User```s can register and create ```Topic```s and ```Post```s.
 - ```User```s may subscribe to any ```Topic```s and may report any ```Topic``` or ```Post``` for moderation.
+- Users can @mention other users in ```Post```s.
+- Users can send and receive messages from other users in realtime, via the internal messaging system.
 - Owners of ```Post```s or eleveated ```User```s may modify or delete ```Post```s.
 - Only ```admin``` and ```moderator``` accounts may delete ```Topic```s.
 - Users can manage their own profile changing to their password and avatar image.
 - All subscribed ```User```s recieve emails, via a triggered event when a ```Topic``` that they are subscribed to has a ```Post``` added to it.
-- Moderators are alerted via email when content is reported and they can easily manage these reports in the Moderator Dashboard.
+- Moderators are alerted via email when content is reported. Moderators can easily manage these reports in the Moderator Dashboard.
 - Other expected events are raised, check out ```App\Events``` and ```App\Listeners``` for further insight. See ```App\Providers\EventServiceProvider```'s ```$listen``` property for the association of ```Event```s and ```Listener```s.
 
 ##Installation & Configuration
 If you would like to install this project, treat it as you would any other Laravel application:
 - Clone the repo.
-- Install dependencies: ```composer install``` (also, ```npm install```, if you need).
+- Install dependencies: ```composer install``` and ```npm install``` (required to install ```pusher-js``` and ```laravel-echo```).
 - Configure environment variables- ```.env``` (see below).
 - Generate application key ```php artisan key:generate```.
 - Run Laravel migrations- ```php artisan migrate```.
@@ -40,11 +42,15 @@ Make sure you configure these environment variables:
 - ```APP_NAME```: the human readable name of the application. This variable is used for refering to the application via emails. It is also used in the navbar as the application branding.
 - ```MAIL_FROM_EMAIL``` and ```MAIL_FROM_NAME```: the 'from' email address and name. This is used for sending out emails.
 - ```S3_KEY```, ```S3_SECRET```, ```S3_REGION```, ```S3_BUCKET_NAME``` and ```S3_IMG_BUCKET_URL```: the conncetion to Amazon S3 variables. These values are used for the avatar uploading facility built in to the application.
+- ```PUSHER_APP_ID```, ```PUSHER_KEY``` and ```PUSHER_SECRET```: the connection configuration for the ```pusher``` broadcast driver.
 
 Further steps:
-- Make sure you set the ```QUEUE_DRIVER``` environment variable to ```database```.
+- Set the ```QUEUE_DRIVER``` environment variable to ```database```.
+- Set ```BROADCAST_DRIVER``` to the broadcast driver to be used. Set this to ```pusher``` if you wish to use the pusher API with ```Laravel Echo```.
 - Set the ```APP_ENV``` environment variable to ```production``` when the app is on a live sever, to force HTTPS connections on all routes.
-- Make sure that you configure your Amazon S3 bucket with a policy that will allow the application to upload avatars to it.
+- Configure your Amazon S3 bucket with a policy that will allow the application to upload avatars to it.
+- Configure the ```Laravel Echo``` instance in ```resources/assets/js/bootstrap.js```, starting line 41.
+- Run ```php artisan queue:work``` to allow jobs, queued mail and event broadcasting to function.
 
 ##Screenshots
 ###Admin Dashboard
@@ -75,14 +81,20 @@ User profile view
 Editing a profile
 ![Edit Profile](https://cloud.githubusercontent.com/assets/9494635/20865191/631bde9a-ba5b-11e6-9a68-b4d337ae4c0a.PNG)
 
+###User Messaging
+Threads
+![Conversations or Threads](https://cloud.githubusercontent.com/assets/9494635/21446200/0355f88a-c913-11e6-8875-23f3f1b37692.PNG)
+
+Messaging
+![Messaging System](https://cloud.githubusercontent.com/assets/9494635/21446174/b0f4d94e-c912-11e6-8f8f-58c282143408.PNG)
+
 ##Routes
-![Routes](https://cloud.githubusercontent.com/assets/9494635/21092663/ab23d970-c09d-11e6-86cb-de620c2b88a6.PNG)
+![Routes](https://cloud.githubusercontent.com/assets/9494635/21446273/ff2ef4f4-c913-11e6-9546-50b476098e2a.PNG)
 Thanks to [Pretty Routes](https://github.com/garygreen/pretty-routes)
 
-##Packages
+##Additional Packages
 - [AWS SDK PHP](https://github.com/aws/aws-sdk-php)
 - [Carbon](https://github.com/briannesbitt/carbon)
-- [DBAL](https://github.com/doctrine/dbal)
 - [Flysystem AWS S3](https://github.com/thephpleague/flysystem-aws-s3-v3)
 - [Image](https://github.com/Intervention/image)
 - [Laravel Markdown](https://github.com/GrahamCampbell/Laravel-Markdown)
