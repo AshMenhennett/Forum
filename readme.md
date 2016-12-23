@@ -98,6 +98,7 @@ Thanks to [Pretty Routes](https://github.com/garygreen/pretty-routes)
 - [Flysystem AWS S3](https://github.com/thephpleague/flysystem-aws-s3-v3)
 - [Image](https://github.com/Intervention/image)
 - [Laravel Markdown](https://github.com/GrahamCampbell/Laravel-Markdown)
+
 - [Laravel Echo](https://github.com/laravel/echo)
 - [Pusher](https://github.com/pusher/pusher-js)
 
