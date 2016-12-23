@@ -46,7 +46,7 @@ Make sure you configure these environment variables:
 
 Further steps:
 - Set the ```QUEUE_DRIVER``` environment variable to ```database```.
-- Set ```BROADCAST_DRIVER``` to the broadcast driver to be used. Set this to ```pusher``` if you wish to use the pusher API with ```Laravel Echo```.
+- Set the ```BROADCAST_DRIVER``` environment variable to the broadcast driver to be used. Set this to ```pusher``` if you wish to use the pusher API with ```Laravel Echo```.
 - Set the ```APP_ENV``` environment variable to ```production``` when the app is on a live sever, to force HTTPS connections on all routes.
 - Configure your Amazon S3 bucket with a policy that will allow the application to upload avatars to it.
 - Configure the ```Laravel Echo``` instance in ```resources/assets/js/bootstrap.js```, starting line 41.
