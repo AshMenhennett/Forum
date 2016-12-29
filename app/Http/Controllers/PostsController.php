@@ -6,6 +6,7 @@ use Auth;
 use App\User;
 use App\Post;
 use App\Topic;
+use App\GetMentionedUsers;
 use App\Events\PostDeleted;
 use Illuminate\Http\Request;
 use App\Events\UsersMentioned;
@@ -16,37 +17,6 @@ use App\Http\Requests\UpdatePostFormRequest;
 
 class PostsController extends Controller
 {
-
-    /**
-     * Returns a collection of users who were '@mentioned'
-     *
-     * @param  Illuminate\Http\Request $request
-     * @return Illuminate\Support\Collection
-     */
-    protected function getMentionedUsers (Request $request)
-    {
-        $matches = [];
-        $mentioned_users = new Collection();
-        // get usernames mentioned and put into $matches
-        preg_match_all('/\@\w+/', $request->post, $matches);
-        for ($i = 0; $i < count($matches[0]); $i++) {
-            // get User objects from mentioned @usernames
-            $mentioned_users->push(User::where('name', str_replace('@', '', $matches[0][$i]))->first());
-        }
-
-        if (count($mentioned_users)) {
-            // remove null value in Collection and remove current user from list of mentioned users, we don't want to email them about mentioning themselves, if they happen to..
-            $mentioned_users = $mentioned_users->reject(function ($value, $key) {
-                if ($value !== null) {
-                    return $value->id === Auth::user()->id;
-                } else {
-                    return true;
-                }
-            });
-        }
-
-        return $mentioned_users;
-    }
 
     /**
      * Creates a Post.
@@ -60,6 +30,7 @@ class PostsController extends Controller
         $post = new Post();
         $post->topic_id = $topic->id;
         $post->user_id = $request->user()->id;
+
         // change @username to markdown link
         // I.e. @username -> [@username](APP_URL/user/profile/@username)
         $url = env('APP_URL');
@@ -67,14 +38,14 @@ class PostsController extends Controller
 
         $post->save();
 
-        $mentioned_users = $this->getMentionedUsers($request);
+        // do @mention functionality
+        $mentioned_users = GetMentionedUsers::handle($request->post);
 
         if (count($mentioned_users)) {
             event(new UsersMentioned($mentioned_users, $topic, $post));
         }
 
         event(new UserPostedOnTopic($topic, $post, $request->user()));
-
 
         return redirect()->route('forum.topics.topic.show', [
             'topic' => $topic,
