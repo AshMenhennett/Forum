@@ -2,6 +2,8 @@ $charcoal : #525251;
 $danger: #d9534f;
 $white : #fff;
 $grey : #ccc;
+$blue : #3498db;
+$green : #2ecc71;
 
 form.custom-horizontal {
     .btn {
@@ -54,3 +56,30 @@ img.img-thumbnail {
 .report-topic {
     padding-right: 6px;
 }
+
+.msg-container {
+    clear: both;
+    &:last-of-type {
+        margin-bottom: 30px;
+    }
+
+    .msg {
+        margin: 10px;
+        padding: 16px 20px;
+        border-radius: 8px;
+        -moz-border-radius: 8px;
+        -webkit-border-radius: 8px;
+        color: #fff;
+        &.recipient {
+            background: $blue;
+        }
+        &.sender {
+            background: $green;
+        }
+    }
+}
+
+.msg-form {
+    clear: both;
+}
+

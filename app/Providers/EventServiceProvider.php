@@ -37,6 +37,9 @@ class EventServiceProvider extends ServiceProvider
         'App\Events\UsersMentioned' => [
             'App\Listeners\SendUsersMentionedEmail',
         ],
+        'App\Events\UserHasViewedMessagesFromSender' => [
+            'App\Listeners\UpdateReadFlagOnMessagesForGivenSender',
+        ],
     ];
 
     /**

@@ -49,9 +49,9 @@
                         <p>You have the power!<br />Feel free to head over to the <a href="{{ route('admin.dashboard.index') }}">admin dashboard</a> and remove any users that are abusing the system.</p>
                     @else
                         @if (count($admins))
-                            <p>Contact an administrator if you feel that a user is abusing the reporting system.</p>
+                            <p>Contact an administrator if you feel that a user is abusing the reporting system:</p>
                             @foreach ($admins as $admin)
-                                <p><a href="mailto:{{ $admin->email }}&Subject={{ env('APP_NAME') }}%20Reporting%20System%20Abuse">{{ $admin->name }}</a></p>
+                                <p><a href="{{ route('user.chat.threads.index') }}?recipient={{ $admin->name }}">{{ $admin->name }}</a></p>
                             @endforeach
                         @else
                             <p>Contact the entity that installed this applicationm, telling them that there are no administrative accounts.</p>

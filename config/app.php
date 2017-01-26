@@ -173,9 +173,11 @@ return [
          */
         App\Providers\AppServiceProvider::class,
         App\Providers\AuthServiceProvider::class,
-        // App\Providers\BroadcastServiceProvider::class,
+        App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
+
+        App\Providers\GetMentionedUsersServiceProvider::class,
     ],
 
     /*
@@ -226,7 +228,8 @@ return [
 
         'Image' => Intervention\Image\Facades\Image::class,
         'Markdown' => GrahamCampbell\Markdown\Facades\Markdown::class,
-        'AutolinkToUsername' => App\Facades\AutolinkUsername::class,
+        'GetMentionedUsers' => App\Facades\GetMentionedUsers::class,
+
     ],
 
 ];

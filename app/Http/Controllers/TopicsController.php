@@ -7,6 +7,7 @@ use App\User;
 use App\Post;
 use App\Topic;
 use App\Subscription;
+use App\GetMentionedUsers;
 use App\Events\TopicDeleted;
 use Illuminate\Http\Request;
 use App\Events\UsersMentioned;
@@ -15,37 +16,6 @@ use App\Http\Requests\CreateTopicFormRequest;
 
 class TopicsController extends Controller
 {
-
-    /**
-     * Returns a collection of users who were '@mentioned'
-     *
-     * @param  Illuminate\Http\Request $request
-     * @return Illuminate\Support\Collection
-     */
-    protected function getMentionedUsers (Request $request)
-    {
-        $matches = [];
-        $mentioned_users = new Collection();
-        // get usernames mentioned and put into $matches
-        preg_match_all('/\@\w+/', $request->post, $matches);
-        for ($i = 0; $i < count($matches[0]); $i++) {
-            // get User objects from mentioned @usernames
-            $mentioned_users->push(User::where('name', str_replace('@', '', $matches[0][$i]))->first());
-        }
-
-        if (count($mentioned_users)) {
-            // remove null value in Collection and remove current user from list of mentioned users, we don't want to email them about mentioning themselves, if they happen to..
-            $mentioned_users = $mentioned_users->reject(function ($value, $key) {
-                if ($value !== null) {
-                    return $value->id === Auth::user()->id;
-                } else {
-                    return true;
-                }
-            });
-        }
-
-        return $mentioned_users;
-    }
 
     /**
      * Displays all Topics.
@@ -119,8 +89,9 @@ class TopicsController extends Controller
 
         $post->save();
 
-        // do the @menttion functionality
-        $mentioned_users = $this->getMentionedUsers($request);
+        // do @mention functionality
+        $mentioned_users = GetMentionedUsers::handle($request->post);
+
         if (count($mentioned_users)) {
             event(new UsersMentioned($mentioned_users, $topic, $post));
         }

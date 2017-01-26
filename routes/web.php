@@ -25,6 +25,7 @@ Route::group(['middleware' => ['log.activity']], function() {
 
     // auth routing
     Route::group(['middleware' => ['auth']], function () {
+
         // general auth routing
         Route::get('/home', 'HomeController@index')->name('home.index');
 
@@ -54,10 +55,25 @@ Route::group(['middleware' => ['log.activity']], function() {
             });
         });
 
-        // user profile modification
-        Route::group(['prefix' => 'user/profile'], function() {
-            Route::get('/@{user}/settings', 'ProfileSettingsController@index')->name('user.profile.settings.index');
-            Route::post('/@{user}/settings/update/', 'ProfileSettingsController@update')->name('user.profile.settings.update');
+        // user routing
+        Route::group(['prefix' => 'user'], function() {
+
+            Route::group(['prefix' => 'chat/threads'], function() {
+                // user messaging
+                Route::get('/', 'MessagesThreadController@index')->name('user.chat.threads.index');
+                Route::post('/create', 'MessagesThreadController@create')->name('user.chat.threads.create');
+
+                Route::get('/@{user}/messages', 'MessagesController@index')->name('user.chat.threads.thread.messages.index');
+                Route::get('/@{user}/messages/fetch', 'MessagesController@fetchMessages')->name('user.chat.threads.thread.messages.fetch');
+                Route::post('/@{user}/messages', 'MessagesController@create')->name('user.chat.threads.thread.messages.create');
+            });
+
+            Route::group(['prefix' => 'profile'], function() {
+                // user profile
+                Route::get('/@{user}/settings', 'ProfileSettingsController@index')->name('user.profile.settings.index');
+                Route::post('/@{user}/settings/update/', 'ProfileSettingsController@update')->name('user.profile.settings.update');
+            });
+
         });
 
         // admin routing

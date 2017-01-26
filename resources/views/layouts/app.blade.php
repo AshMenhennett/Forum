@@ -22,6 +22,7 @@
     <script>
         window.Forum = <?php echo json_encode([
             'auth' => Auth::check(),
+            'user_id' => Auth::check() ? Auth::user()->id : -1,
             'roles' => Config::get('enums.roles')
         ]); ?>
 
@@ -73,7 +74,8 @@
                                         <li><a href="{{ route('moderator.dashboard.index') }}">Moderator Dashboard</a></li>
                                     @endif
                                     <li><a href="{{ route('home.index') }}">My Topics</a></li>
-                                    <li><a href="{{ route('user.profile.index', Auth::user()->name) }}">Profile</a></li>
+                                    <li><a href="{{ route('user.chat.threads.index') }}">My Messages {!! Auth::user()->hasUnreadMessages() ? '<span class="badge">' . Auth::user()->unreadMessageCount(). '</span>' : '' !!}</span></a></li>
+                                    <li><a href="{{ route('user.profile.index', Auth::user()->name) }}">My Profile</a></li>
                                     <li>
                                         <a href="{{ url('/logout') }}"
                                             onclick="event.preventDefault();
