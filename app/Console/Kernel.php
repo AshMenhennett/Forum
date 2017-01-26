@@ -14,7 +14,6 @@ class Kernel extends ConsoleKernel
      */
     protected $commands = [
         Commands\UpdateUserRole::class,
-        Commands\ClearCompiledViews::class,
         Commands\ClearLocalAvatarStorage::class,
     ];
 

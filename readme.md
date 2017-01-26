@@ -32,8 +32,8 @@ If you would like to install this project, treat it as you would any other Larav
 - Clone the repo.
 - Install dependencies: ```composer install``` (also, ```npm install```, if you need).
 - Configure environment variables- ```.env``` (see below).
-- Generate application key ```php artisan key:generate```.
-- Run Laravel migrations- ```php artisan migrate```.
+- Generate application key: ```php artisan key:generate```.
+- Run Laravel migrations: ```php artisan migrate```.
 
 Make sure you configure these environment variables:
 - ```APP_URL``` : the url of the application. This variable is used for linking to the application in emails.
