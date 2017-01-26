@@ -1,6 +1,6 @@
-#Forum
+#Elite Forum
 
-This is a repository for a forum app, built with Laravel 5.3 and Vue 2.
+This is a repository for a fully-fledged modern forum app, including private messaging, built with Laravel 5.3 and Vue 2.
 
 ##Highlights
 - @mention functionality, alerting ```User```s by email when they are mentioned in a post. Including auto link generation, when a ```User``` uses the @mention functionality. I.e ```@ashmenhennett``` will be converted to ```[@ashmenhennett](http://example.com/user/profile/@ashmenhennett)```.
