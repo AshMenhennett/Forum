@@ -32,7 +32,7 @@ There are a couple of commands for use with this application:
 ##Installation & Configuration
 If you would like to install this project, treat it as you would any other Laravel application:
 - Clone the repo.
-- Install dependencies: ```composer install``` and ```npm install``` (if you would like to develop the application further).
+- Install dependencies: ```composer install``` (also, ```npm install```, if you need).
 - Configure environment variables- ```.env``` (see below).
 - Generate application key: ```php artisan key:generate```.
 - Run Laravel migrations: ```php artisan migrate```.
