@@ -47,6 +47,10 @@ Further steps:
 - Configure the ```Laravel Echo``` instance in ```resources/assets/js/bootstrap.js```, starting line 41.
 - Run ```php artisan queue:work``` to allow jobs, queued mail and event broadcasting to function.
 
+Note:
+
+This application uses some PHP 7's syntax. Version below 7 is not supported.
+
 ## Commands
 There are a couple of commands for use with this application:
 - When the 'to-be' Administrator registers for an account, it is necessary to execute the ```alter:role``` command via command line, after they have registered, passing in the id of the ```User``` and the role (i.e. ```admin```). Eg. ```php artisan alter:role 1 admin```. This is currently the only logical way of elevating a specific user, when no other ```admin```s exist.
